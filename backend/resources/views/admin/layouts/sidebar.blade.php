@@ -24,7 +24,9 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link d-flex align-items-center gap-2">
                         <i class="fas fa-user"></i>
-                        {{ auth()->guard('admin')->user()->name }}
+                       @if(auth('admin')->check())
+                         {{ auth()->guard('admin')->user()->name }}
+                          @endif
                     </a>
                 </li>
                 <li class="nav-item">
