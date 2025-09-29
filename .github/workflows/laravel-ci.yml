@@ -33,12 +33,12 @@ jobs:
       run: |
         mkdir -p database
         touch database/database.sqlite
-    - name: Clear caches
-      run: |
-        php artisan config:clear
-        php artisan cache:clear
-        php artisan route:clear
-        php artisan view:clear
+    # - name: Clear caches
+    #   run: |
+    #     php artisan config:clear
+    #     php artisan cache:clear
+    #     php artisan route:clear
+    #     php artisan view:clear
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       env:
         APP_ENV: testing
