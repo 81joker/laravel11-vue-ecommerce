@@ -69,7 +69,7 @@ class CategoryTest extends TestCase
 
         $payload = ['name' => 'Summer Shoes'];
 
-        $res = $this->post(route('admin.categories.stssore'), $payload);
+        $res = $this->post(route('admin.categories.store'), $payload);
 
         $res->assertRedirect(route('admin.categories.index'))
             ->assertSessionHas('success', 'Category created successfully.');
