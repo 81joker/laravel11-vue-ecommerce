@@ -83,13 +83,12 @@ class CategoryTest extends TestCase
     public function test_store_fails_validation_when_name_is_missing()
     {
         $this->signIn();
-        $payload = ['name' => 'Summer Shoes XX'];
 
         // Your AddCategoryRequest likely requires 'name'
         $res = $this->from(route('admin.categories.create'))
-                    ->post(route('admin.categories.store'),$payload );
+                    ->post(route('admin.categories.store'), []);
 
-        $res->assertRedirect(); 
+        $res->assertRedirect(); // back
         $res->assertSessionHasErrors(['name']);
         $this->assertDatabaseCount('categories', 0);
     }
