@@ -6,42 +6,49 @@ use Tests\TestCase;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CategoryTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     */
-    public function test_category(): void
-    {
-        $response = $this->get('/admin/categories');
 
-        $response->assertStatus(200);
-    }
-    /** If your admin routes are behind auth, this helps. */
-    protected function signIn(): void
+    protected ?Admin $admin = null;
+
+    protected function setUp(): void
     {
+        parent::setUp();
+
+        // If your admin guard exists, sign in once for all tests here.
         if (class_exists(Admin::class)) {
-
-            $admin = Admin::factory()->create();
-            $this->actingAs($admin, 'admin');
+            $this->admin = Admin::factory()->create();
+            $this->actingAs($this->admin, 'admin');
         } else {
-            // If no auth middleware, this is fine.
             $this->withoutMiddleware();
         }
     }
 
-    public function test_category_index(): void
+    /** Convenience: make N categories and return the collection */
+    protected function makeCategories(int $count = 1)
     {
-        $this->signIn();
-        $cats = Category::factory()->count(3)->create();
+        return Category::factory()->count($count)->create();
+    }
+
+    /** Convenience: make a single category and return it */
+    protected function makeCategory(array $overrides = []): Category
+    {
+        return Category::factory()->create($overrides);
+    }
+
+    public function test_category_root_is_reachable(): void
+    {
+        $this->get('/admin/categories')->assertStatus(200);
+    }
+
+    public function test_index_lists_categories(): void
+    {
+        $cats = $this->makeCategories(3);
 
         $res = $this->get(route('admin.categories.index'));
-        $res->assertStatus(200);
 
         $res->assertOk()
             ->assertViewIs('admin.categories.index')
@@ -49,24 +56,21 @@ class CategoryTest extends TestCase
                 return $collection->count() === 3 &&
                     $collection->pluck('id')->diff($cats->pluck('id'))->isEmpty();
             });
+
         foreach ($cats as $c) {
             $res->assertSee(e($c->name));
         }
     }
 
-    public function test_create_displays_the_create_form()
+    public function test_create_displays_form(): void
     {
-        $this->signIn();
-
         $this->get(route('admin.categories.create'))
             ->assertOk()
             ->assertViewIs('admin.categories.create');
     }
 
-    public function test_store_persists_a_new_category_and_redirects_with_flash()
+    public function test_store_persists_and_redirects_with_flash(): void
     {
-        $this->signIn();
-
         $payload = ['name' => 'Summer Shoes'];
 
         $res = $this->post(route('admin.categories.store'), $payload);
@@ -80,40 +84,33 @@ class CategoryTest extends TestCase
         ]);
     }
 
-    public function test_store_fails_validation_when_name_is_missing()
+    public function test_store_validates_name_is_required(): void
     {
-        $this->signIn();
-
         $res = $this->from(route('admin.categories.create'))
             ->post(route('admin.categories.store'), []);
 
-        $res->assertRedirect(); // back
+        $res->assertRedirect();
         $res->assertSessionHasErrors(['name']);
         $this->assertDatabaseCount('categories', 0);
     }
 
-    public function test_edit_displays_the_edit_form()
+    public function test_edit_displays_form(): void
     {
-        $this->signIn();
-
-        $category = Category::factory()->create();
+        $category = $this->makeCategory();
 
         $this->get(route('admin.categories.edit', $category))
             ->assertOk()
             ->assertViewIs('admin.categories.edit')
-            ->assertViewHas('category', function ($bound) use ($category) {
-                return $bound->is($category);
-            });
+            ->assertViewHas('category', fn ($bound) => $bound->is($category));
     }
 
-    public function test_update_changes_the_category_and_redirects_with_flash()
+    public function test_update_changes_category_and_redirects_with_flash(): void
     {
-        $this->signIn();
+        $category = $this->makeCategory(['name' => 'Old Name']);
 
-        $category = Category::factory()->create(['name' => 'Old Name']);
-        $payload  = ['name' => 'Fresh Name'];
-
-        $res = $this->put(route('admin.categories.update', $category), $payload);
+        $res = $this->put(route('admin.categories.update', $category), [
+            'name' => 'Fresh Name',
+        ]);
 
         $res->assertRedirect(route('admin.categories.index'))
             ->assertSessionHas('success', 'Category has been updated successfully.');
@@ -125,25 +122,21 @@ class CategoryTest extends TestCase
         ]);
     }
 
-    public function test_update_fails_validation_when_name_is_missing()
+    public function test_update_validates_name_is_required(): void
     {
-        $this->signIn();
-
-        $category = Category::factory()->create();
+        $category = $this->makeCategory();
 
         $res = $this->from(route('admin.categories.edit', $category))
             ->put(route('admin.categories.update', $category), []);
 
         $res->assertRedirect();
         $res->assertSessionHasErrors(['name']);
-        $this->assertDatabaseHas('categories', ['id' => $category->id]); // unchanged still exists
+        $this->assertDatabaseHas('categories', ['id' => $category->id]);
     }
 
-    public function test_destroy_deletes_the_category_and_redirects_with_flash()
+    public function test_destroy_deletes_and_redirects_with_flash(): void
     {
-        $this->signIn();
-
-        $category = Category::factory()->create();
+        $category = $this->makeCategory();
 
         $res = $this->delete(route('admin.categories.destroy', $category));
 
