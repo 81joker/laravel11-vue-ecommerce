@@ -66,7 +66,7 @@ class CategoryController extends Controller
         if($request->validated()){
             $data  = $request->validated();
             $data['slug'] = Str::slug($data['name']);
-            $category->update($data);;
+            $category->update($data);
             // Category::where('id',$category->id)->update($data);
             return redirect()->route('admin.categories.index')->with('success', 'Category has been updated successfully.');
         }

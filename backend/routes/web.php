@@ -25,6 +25,18 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             'destroy' => 'admin.categories.destroy',
         ]   
     ]);
+// Brands
+    Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class ,
+    [
+        'names' => [
+            'index' => 'admin.brands.index',
+            'create' => 'admin.brands.create',
+            'store' => 'admin.brands.store',
+            'edit' => 'admin.brands.edit',
+            'update' => 'admin.brands.update',
+            'destroy' => 'admin.brands.destroy',
+        ]   
+    ]);
 
 
 });

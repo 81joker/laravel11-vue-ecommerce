@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
 {
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,7 +24,6 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:categories,name,'.$this->category->id,
-            // 'slug' => 'required|string|max:255|unique:categories,slug,'.$this->category->id,
         ];
     }
 }
