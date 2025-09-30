@@ -63,4 +63,21 @@ class CategoryTest extends TestCase
              ->assertViewIs('admin.categories.create');
     }
 
+     public function test_store_persists_a_new_category_and_redirects_with_flash()
+    {
+        $this->signIn();
+
+        $payload = ['name' => 'Summer Shoes'];
+
+        $res = $this->post(route('admin.categories.stssore'), $payload);
+
+        $res->assertRedirect(route('admin.categories.index'))
+            ->assertSessionHas('success', 'Category created successfully.');
+
+        $this->assertDatabaseHas('categories', [
+            'name' => 'Summer Shoes',
+            'slug' => Str::slug('Summer Shoes'),
+        ]);
+    }
+
 }
