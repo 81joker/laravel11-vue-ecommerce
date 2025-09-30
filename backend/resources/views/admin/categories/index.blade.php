@@ -9,7 +9,8 @@
                     <div class="col-md-12">
                         <div class="card-header bg-white d-flex justify-content-between align-items-center">
                             <h3 class="mt-2">Categories {{ $categories->count() }}</h3>
-                            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary"><i
+                                    class="fas fa-plus"></i></a>
                         </div>
                         <hr>
                         <div class="card-body">
@@ -31,16 +32,20 @@
                                             <td>{{ $category->slug }}</td>
                                             <td>{{ $category->created_at->format('d M Y') }}</td>
                                             <td>
-                                                <a href="{{ route('admin.categories.edit', $category->slug) }}" class="btn btn-sm btn-warning">
+                                                <a href="{{ route('admin.categories.edit', $category->slug) }}"
+                                                    class="btn btn-sm btn-warning">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                         <a href="#" onclick="deleteItem({{$category->id}})" class="btn btn-sm btn-danger">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                            <form id="{{$category->id}}" action="{{route('admin.categories.destroy',$category->slug)}}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
+                                                <a href="#" onclick="deleteItem({{ $category->id }})"
+                                                    class="btn btn-sm btn-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                                <form id="{{ $category->id }}"
+                                                    action="{{ route('admin.categories.destroy', $category->slug) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

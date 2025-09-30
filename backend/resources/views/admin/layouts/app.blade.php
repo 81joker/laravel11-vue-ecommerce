@@ -67,6 +67,7 @@
             $('.dropdown-toggle').dropdown();
         })
     </script>
+    {{-- Delete Confirmation --}}
     <script>
         function deleteItem(id) {
             Swal.fire({
