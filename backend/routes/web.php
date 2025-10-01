@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ColoryController;
+
 
 Route::get('/',[AdminController::class,'login'])->name('admin.login');
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
@@ -35,6 +37,19 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             'edit' => 'admin.brands.edit',
             'update' => 'admin.brands.update',
             'destroy' => 'admin.brands.destroy',
+        ]   
+    ]);
+// Colors
+// Brands
+    Route::resource('colors', ColoryController::class ,
+    [
+        'names' => [
+            'index' => 'admin.colors.index',
+            'create' => 'admin.colors.create',
+            'store' => 'admin.colors.store',
+            'edit' => 'admin.colors.edit',
+            'update' => 'admin.colors.update',
+            'destroy' => 'admin.colors.destroy',
         ]   
     ]);
 
