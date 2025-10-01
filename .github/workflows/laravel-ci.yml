@@ -67,3 +67,24 @@ jobs:
 
       - name: Install Laravel Pint
         run: composer require laravel/pint --dev
+  
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
