@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ColoryController;
-
+use App\Http\Controllers\Admin\SizeController;
 
 Route::get('/',[AdminController::class,'login'])->name('admin.login');
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
@@ -40,7 +40,6 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         ]   
     ]);
 // Colors
-// Brands
     Route::resource('colors', ColoryController::class ,
     [
         'names' => [
@@ -50,6 +49,19 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             'edit' => 'admin.colors.edit',
             'update' => 'admin.colors.update',
             'destroy' => 'admin.colors.destroy',
+        ]   
+    ]);
+
+// Size
+    Route::resource('sizes', SizeController::class ,
+    [
+        'names' => [
+            'index' => 'admin.sizes.index',
+            'create' => 'admin.sizes.create',
+            'store' => 'admin.sizes.store',
+            'edit' => 'admin.sizes.edit',
+            'update' => 'admin.sizes.update',
+            'destroy' => 'admin.sizes.destroy',
         ]   
     ]);
 
