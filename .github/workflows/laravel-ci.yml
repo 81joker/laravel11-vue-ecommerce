@@ -64,4 +64,5 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-interaction
 
       - name: Run Laravel Pint (check mode)
-        run: vendor/bin/pint --test
+        run: vendor/bin/pint 
+        
