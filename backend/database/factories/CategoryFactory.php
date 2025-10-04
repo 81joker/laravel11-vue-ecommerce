@@ -16,12 +16,14 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(2, true);
-
+        $categories = ['Electronics', 'Books', 'Clothing', 
+        'Home & Kitchen', 'Sports & Outdoors', 'Toys & Games', 
+        'Health & Personal Care', 'Automotive', 'Beauty', 'Grocery'];
+        $name = $this->faker->unique()->randomElement($categories);
         return [
             'name' => $name,
             'slug' => \Illuminate\Support\Str::slug($name),
             // add other fillable columns with sensible defaults if you have them
         ];
-    }
+    }   
 }

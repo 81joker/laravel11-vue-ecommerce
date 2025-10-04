@@ -58,6 +58,7 @@
         </script>
     @endsession
     <script>
+        // initialize exditor and datatables
         $(document).ready(function() {
             //datatables
             $('.table').DataTable();

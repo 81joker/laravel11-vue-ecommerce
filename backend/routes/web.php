@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ColoryController;
-use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\ProductController;
 
 Route::get('/',[AdminController::class,'login'])->name('admin.login');
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
@@ -65,5 +66,15 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         ]   
     ]);
 
-
+    //products routes
+    Route::resource("products",ProductController::class,[
+        'names' => [
+            'index' => 'admin.products.index',
+            'create' => 'admin.products.create',
+            'store' => 'admin.products.store',
+            'edit' => 'admin.products.edit',
+            'update' => 'admin.products.update',
+            'destroy' => 'admin.products.destroy',
+        ]
+    ]);
 });
