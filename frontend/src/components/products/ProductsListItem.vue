@@ -1,9 +1,9 @@
 <template>        
-<div class="col-md-6 col-lg-4">
-    <div class="card" style="max-width: 320px">
+   <div class="col-md-6">
+        <div class="card mb-2" style="max-width: 320px">
 
-        <img :src="product.thumbnail" class="card-img-top" :alt="product.name">
-
+<img :src="product.thumbnail" class="card-img-top" 
+                :alt="product.name" height="279">
     <div class="card-body">
         <h5 class="card-title">{{ product.name }}</h5>
         <p class="card-text" v-dompurify-html="product.desc.substr(0,50)"></p>
