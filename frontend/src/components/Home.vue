@@ -1,11 +1,12 @@
 <template>
-<div>
+<div class="row mt-4">
     <h1 class="text-center my-4">Welcome to Our Store</h1>
     <!-- <div v-if="productStore.isLoading" class="text-center">
         <p>Loading products...</p>
     </div> -->
     <Spinner  :store="productStore"/>
-    <div >
+    <Sidebar />
+    <div class="col-md-8">
         <ProductList />
     </div>
 </div>
@@ -17,6 +18,7 @@ import ProductList from './products/ProductList.vue';
 import { useProductStore } from '../stores/useProductStore'
 import { onMounted } from 'vue';
 import { setActivePinia } from 'pinia';
+import Sidebar from './layouts/Sidebar.vue';
 
 // define the store variable
 const productStore = useProductStore()
