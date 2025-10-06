@@ -32,7 +32,6 @@ export const useProductStore = defineStore('products', {
         this.isLoading = true
         try {
             const response = await axios.get(`http://localhost:8000/api/products/${value}/${param}`)
-            // const response = await axios.get(`http://localhost:8000/api/products/${value}/${param}?search=${search}`)
             this.products = response.data.data 
             this.categories = response.data.categories
             this.colors = response.data.colors

@@ -6,6 +6,7 @@
             @click="productStore.clearFilter()"
                 >Clear all</button>
         </div>
+        <SearchForm />
         <Categories />
         <Brands />
         <Sizes />
@@ -14,6 +15,7 @@
 </template>
 
 <script setup>
+import SearchForm from "../partials/SearchForm.vue"
 import Brands from "../partials/Brands.vue"
 import Categories from "../partials/Categories.vue";
 import Colors from "../partials/Colors.vue";
