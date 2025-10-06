@@ -5,12 +5,18 @@
             <button class="btn btn-link text-dark"
                 >Clear all</button>
         </div>
+        <Categories />
         <Brands />
+        <Sizes />
+        <Colors />
     </div>
 </template>
 
 <script setup>
 import Brands from "../partials/Brands.vue"
+import Categories from "../partials/Categories.vue";
+import Colors from "../partials/Colors.vue";
+import Sizes from "../partials/Sizes.vue";
 import { useProductStore } from '../../stores/useProductStore'
 
     //define the store

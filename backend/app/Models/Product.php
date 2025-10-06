@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Color;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
