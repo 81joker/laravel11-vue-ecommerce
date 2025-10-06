@@ -50,7 +50,7 @@ class CategoryTest extends TestCase
                     $collection->pluck('id')->diff($cats->pluck('id'))->isEmpty();
             });
         foreach ($cats as $c) {
-            $res->assertSee(e($c->name));
+            $res->assertSee($c->name);
         }
     }
 
