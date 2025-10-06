@@ -15,4 +15,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    css: true,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'html']
+    }
+  }
 })
