@@ -1,7 +1,7 @@
 <template>
     <div class="row">
       <div class="d-flex">
-        <div class="mb-3">
+        <div class="mb-3" v-if="productStore.products.length > 0">
           Found 
           <span class="fw-bold">{{ productStore.products.length }}</span>
           {{ productStore.products.length === 1 ? 'product' : 'products' }}

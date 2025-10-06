@@ -3,6 +3,7 @@
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h5>Filters</h5>
             <button class="btn btn-link text-dark"
+            @click="productStore.clearFilter()"
                 >Clear all</button>
         </div>
         <Categories />
