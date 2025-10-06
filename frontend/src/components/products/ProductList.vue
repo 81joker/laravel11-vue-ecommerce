@@ -1,6 +1,15 @@
 <template>
-  <div class="container">
     <div class="row">
+      <div class="d-flex">
+        <div class="mb-3">
+          Found 
+          <span class="fw-bold">{{ productStore.products.length }}</span>
+          {{ productStore.products.length === 1 ? 'product' : 'products' }}
+        </div>
+        <div class="ms-1" v-if="productStore.filter">
+          for <span class="fw-bold">{{productStore.filter.param}} {{ productStore.filter.value }}</span>
+        </div>
+      </div>
       <ProductsListItem
         v-for="product in productStore.products.slice(0,data.productToShow)"
         :key="product.id"
@@ -20,7 +29,6 @@
         </button>
       </div>
 
-    </div>
   </div>
 </template>
 <script setup>
@@ -33,7 +41,7 @@ const productStore = useProductStore();
 
 // define how many products to shw on home page 
 const data = reactive({
-    productToShow: 2
+    productToShow: 4
 })
 
 

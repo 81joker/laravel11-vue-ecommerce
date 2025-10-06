@@ -1,6 +1,7 @@
 <template>
-  <div class="col-md-6">
-    <div class="card mb-2" style="max-width: 320px">
+  <div class="col-md-6 col-lg-4 mb-3">
+    <div class="card mb-2">
+    <!-- <div class="card mb-2" style="max-width: 320px"> -->
       <img
         :src="product.thumbnail"
         class="card-img-top"
