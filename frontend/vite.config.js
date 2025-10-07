@@ -22,10 +22,12 @@ export default defineConfig({
     css: true,
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html', 'lcov'],
+      reporter: ['text', 'html', 'lcov' , 'json-summary'],
       reportsDirectory: './coverage',
       include: ['src/components/**/*.{vue,js,ts}', 'src/stores/**/*.{js,ts}'],
       exclude: ['src/main.js', 'src/router/**', 'src/components/icons/**', 'src/components/auth/**']
     }
   }
 })
+
+ 
