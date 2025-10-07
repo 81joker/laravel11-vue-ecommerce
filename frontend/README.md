@@ -21,13 +21,10 @@ Key benefits:
 
 🔧 Fully customizable allowed tags and attribut
 
-11- install pacgke https://www.npmjs.com/package/vue-image-zoomer 
-
-
-
-
-
-
+11- install pacgke https://www.npmjs.com/package/vue-image-zoome
+12- Display the product detials
+13- Create the store add cart 
+14- for Notidafaction i use the libary [Vue Toastification](https://github.com/Maronato/vue-toastification)
 +++++++++++++++++++++++++++++++++++++++++++++++
 What is Pinia?
 
