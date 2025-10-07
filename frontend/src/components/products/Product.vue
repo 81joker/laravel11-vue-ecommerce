@@ -14,19 +14,19 @@
             </vue-image-zoomer>
           </div>
           <div class="row my-2">
-                    <div class="col-md-6"
-                        v-for="productImage in productStore.productImages"
-                        :key="productImage.id"
-                    >
-                        <vue-image-zoomer 
-                            img-class="img-fluid rounded" 
-                            :regular="productImage.src"
-                            :zoom="productImage.src"
-                        />
-                    </div>
-                </div>
+            <div
+              class="col-md-6"
+              v-for="productImage in productStore.productImages"
+              :key="productImage.id"
+            >
+              <vue-image-zoomer
+                img-class="img-fluid rounded"
+                :regular="productImage.src"
+                :zoom="productImage.src"
+              />
+            </div>
+          </div>
         </div>
-        
 
         <!-- <pre>
                 {{ productStore.product }}
@@ -53,9 +53,14 @@
           </div>
           <div class="d-flex flex-wrap justify-content-start">
             <div
-                        :class="`${data.chosenColor?.id === color.id ? 'border border-light-subtle shadow-sm border-2 rounded' : ''}  mb-1 me-1`"               v-for="color in productStore.product.colors"
+              :class="`${
+                data.chosenColor?.id === color.id
+                  ? 'border border-light-subtle shadow-sm border-2 rounded'
+                  : ''
+              }  mb-1 me-1`"
+              v-for="color in productStore.product.colors"
               :key="color.id"
-                @click="setChosenColor(color)"
+              @click="setChosenColor(color)"
               :style="{
                 backgroundColor: color.name,
                 width: '30px',
@@ -69,9 +74,13 @@
             class="d-flex flex-wrap justify-content-start align-items-center mb-4"
           >
             <button
-               :class="`${data.chosenSize?.id === size.id ? 'btn btn-danger mb-3 mx-1 rounded-0' : 'btn btn-sm btn-outline-secondary mb-3 mx-1'}`"
+              :class="`${
+                data.chosenSize?.id === size.id
+                  ? 'btn btn-danger mb-3 mx-1 rounded-0'
+                  : 'btn btn-sm btn-outline-secondary mb-3 mx-1'
+              }`"
               v-for="size in productStore.product.sizes"
-                @click="setChosenSize(size)"
+              @click="setChosenSize(size)"
               :key="size.id"
             >
               {{ size.name }}
@@ -84,11 +93,7 @@
               v-if="productStore.product?.status"
               >In Stock</span
             >
-            <span
-              class="badge text-bg-warning"
-              v-else
-              >Out of Stock</span
-            >
+            <span class="badge text-bg-warning" v-else>Out of Stock</span>
           </div>
 
           <div class="my-3 d-inline-flex">
@@ -102,30 +107,50 @@
               />
             </div>
             <div class="ms-2">
-              <button class="btn btn-danger btn-block">
-                <i class="bi bi-cart-plus"></i> Buy Now
+              <button
+                class="btn btn-danger btn-block"
+                :disabled="
+                  !data.chosenColor ||
+                  !data.chosenSize ||
+                  !productStore.product?.status
+                "
+                @click="
+                  cartStore.addToCart({
+                    ref: makeUniqueId(10),
+                    product_id: productStore.product?.id,
+                    name: productStore.product?.name,
+                    slug: productStore.product?.slug,
+                    qty: data.qty,
+                    price: productStore.product?.price,
+                    color: data.chosenColor?.name,
+                    size: data.chosenSize?.name,
+                    maxQty: productStore.product?.qty,
+                    image: productStore.product?.thumbnail,
+                  })
+                "
+              >
+              <!-- <button
+                class="btn btn-danger btn-block"
+                
+                @click="
+                  cartStore.addToCart({
+                    ref: makeUniqueId(10),
+                    product_id: productStore.product?.id,
+                    name: productStore.product?.name,
+                    slug: productStore.product?.slug,
+                    qty: data.qty,
+                    price: productStore.product?.price,
+                    color: data.chosenColor?.name,
+                    size: data.chosenSize?.name,
+                    maxQty: productStore.product?.qty,
+                    image: productStore.product?.thumbnail,
+                    coupon_id: null,
+                  })
+                "
+              > -->
+                <i class="bi bi-cart-plus"></i> Add to cart
               </button>
             </div>
-            <!-- <div class="ms-2">
-                        <button class="btn btn-danger btn-block"
-                            :disabled="!data.chosenColor || !data.chosenSize || !productDetailsStore.product?.status"
-                            @click="cartStore.addToCart({
-                                ref: makeUniqueId(10),
-                                product_id: productDetailsStore.product?.id,
-                                name: productDetailsStore.product?.name,
-                                slug: productDetailsStore.product?.slug,
-                                qty: data.qty,
-                                price: productDetailsStore.product?.price,
-                                color: data.chosenColor?.name,
-                                size: data.chosenSize?.name,
-                                maxQty: productDetailsStore.product?.qty,
-                                image: productDetailsStore.product?.thumbnail,
-                                coupon_id: null,
-                            })"
-                            >
-                            <i class="bi bi-cart-plus"></i> Add to cart
-                        </button>
-                    </div> -->
           </div>
         </div>
       </div>
@@ -136,8 +161,11 @@
 import { useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 import { useProductStore } from "@/stores/useProductDetailsStore";
+import { useCartStore } from "@/stores/useCartStore";
 import Spinner from "@/components/layouts/Spinner.vue";
+import { makeUniqueId } from "@/helpers/config.js";
 const productStore = useProductStore();
+const cartStore = useCartStore();
 const route = useRoute();
 
 const data = reactive({
