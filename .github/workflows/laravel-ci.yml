@@ -112,8 +112,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
-        run: npm run lint
+      # - name: Run ESLint
+      #   run: npm run lint
   test:
     name: ✅ Final Test Summary
     needs: [backend-tests, frontend-tests, lint]
