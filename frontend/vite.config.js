@@ -15,13 +15,17 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  // TEST CONFIGURATION
   test: {
     environment: 'jsdom',
     globals: true,
     css: true,
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html']
+      reporter: ['text', 'html', 'lcov'],
+      reportsDirectory: './coverage',
+      include: ['src/components/**/*.{vue,js,ts}', 'src/stores/**/*.{js,ts}'],
+      exclude: ['src/main.js', 'src/router/**', 'src/components/icons/**', 'src/components/auth/**']
     }
   }
 })
