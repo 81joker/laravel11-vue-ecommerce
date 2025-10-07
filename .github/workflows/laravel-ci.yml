@@ -111,29 +111,41 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
   
       #   run: npm run lint
+
   test:
     name: ✅ Final Test Summary
     needs: [backend-tests, frontend-tests, lint]
     runs-on: ubuntu-latest
+    if: ${{ needs.backend-tests.result == 'success' && needs.frontend-tests.result == 'success' && needs.lint.result == 'success' }}
+    defaults:
+      run:
+        working-directory: ./frontend
     steps:
       - name: All tests passed
         run: echo "All tests passed!"
+
+      # Download the coverage into the CURRENT job workspace root.
+      # Since our working dir is ./frontend, use "coverage" (not "frontend/coverage").
       - name: Download frontend coverage report
         uses: actions/download-artifact@v4
         with:
           name: frontend-coverage
-          path: frontend/coverage
+          path: coverage
+
       - name: List coverage files
-        run: ls -R frontend/coverage
+        run: ls -R coverage
 
-      # TODO: Uncomment if you want to see the full coverage summary in the logs
+      # If you added 'json-summary' in vite.config.js, you can cat it here.
       # - name: Display coverage summary
-        # run: cat frontend/coverage/coverage-summary.txt
-      - name: Display coverage lcov report
-        run: head -n 20 frontend/coverage/lcov.info
+      #   run: cat coverage/coverage-summary.json
 
+      - name: Display coverage lcov report
+        run: head -n 20 coverage/lcov.info || echo "No lcov found"
+
+      # Pint lives in backend. Override working dir for this one step (or use ../backend/vendor/bin/pint).
       - name: Display Pint version
         run: vendor/bin/pint --version
+        working-directory: ../backend
+

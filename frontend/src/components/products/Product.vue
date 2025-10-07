@@ -123,7 +123,6 @@ import { useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 import { useProductStore } from "@/stores/useProductDetailsStore";
 import Spinner from "@/components/layouts/Spinner.vue";
-import { VueImageZoomer } from "vue-image-zoomer";
 const productStore = useProductStore();
 const route = useRoute();
 
