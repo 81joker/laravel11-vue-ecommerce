@@ -68,7 +68,7 @@ jobs:
 
   # frontend-tests for Vue (Vitest) tests
   frontend-tests:
-    needs: laravel-tests
+    needs: [laravel-tests , lint]
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -87,7 +87,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Vitest unit tests
+      - name: Run Vitest unit tests (with coverage)
         run:  npm run test:coverage
 
       - name: Upload coverage report
