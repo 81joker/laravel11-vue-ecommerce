@@ -128,8 +128,10 @@ jobs:
           path: frontend/coverage
       - name: List coverage files
         run: ls -R frontend/coverage
-      - name: Display coverage summary
-        run: cat frontend/coverage/coverage-summary.txt
+
+      # TODO: Uncomment if you want to see the full coverage summary in the logs
+      # - name: Display coverage summary
+        # run: cat frontend/coverage/coverage-summary.txt
       - name: Display coverage lcov report
         run: head -n 20 frontend/coverage/lcov.info
 
