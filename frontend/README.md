@@ -21,7 +21,7 @@ Key benefits:
 
 🔧 Fully customizable allowed tags and attribut
 
-
+11- install pacgke https://www.npmjs.com/package/vue-image-zoomer 
 
 
 

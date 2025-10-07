@@ -2,6 +2,7 @@
 
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { API_BASE_URL } from '../helpers/config'
 export const useProductStore = defineStore('products', {
   state: () => ({ 
     products: [],
@@ -16,7 +17,7 @@ export const useProductStore = defineStore('products', {
         async fetchAllProducts() {
         this.isLoading = true
         try {
-            const response = await axios.get('http://localhost:8000/api/products')
+            const response = await axios.get(API_BASE_URL+'/products')
             this.products = response.data.data 
             this.categories = response.data.categories
             this.colors = response.data.colors
@@ -31,7 +32,7 @@ export const useProductStore = defineStore('products', {
         async filterProducts(param,value,search=false) {
         this.isLoading = true
         try {
-            const response = await axios.get(`http://localhost:8000/api/products/${value}/${param}`)
+            const response = await axios.get(API_BASE_URL+`/products/${value}/${param}`)
             this.products = response.data.data 
             this.categories = response.data.categories
             this.colors = response.data.colors

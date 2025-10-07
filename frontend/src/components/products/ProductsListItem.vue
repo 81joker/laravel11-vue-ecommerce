@@ -9,7 +9,12 @@
         height="279"
       />
       <div class="card-body">
+        <router-link
+          :to="`/product/${product.slug}`"
+          class="text-decoration text-dark"
+        >
         <h5 class="card-title">{{ product.name }}</h5>
+    </router-link>
         <p class="card-text" v-dompurify-html="product.desc.substr(0, 50)"></p>
         <div class="d-flex justify-content-between align-items-center">
           <span class="h5 mb-0">${{ product.price }}</span>

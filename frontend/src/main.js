@@ -9,11 +9,13 @@ import router from './components/router/index.js'
 import {LoadingPlugin} from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
 import VueDOMPurifyHTML from 'vue-dompurify-html'
-
+import VueImageZoomer from 'vue-image-zoomer'
+import 'vue-image-zoomer/dist/style.css';
 const pinia = createPinia()
 const app = createApp(App)
 
 
+app.use(VueImageZoomer);
 app.use(VueDOMPurifyHTML)
 app.use(LoadingPlugin);
 app.use(router)
