@@ -2,11 +2,12 @@ name: Laravel 11
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
+  # 1️⃣ BACKEND TESTS (Laravel)
   laravel-tests:
     runs-on: ubuntu-latest
     defaults:
@@ -37,38 +38,16 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
+      - name: Execute Laravel Tests (PHPUnit/Pest)
         env:
           APP_ENV: testing
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
         run: php artisan test
 
-  lint:
-    needs: laravel-tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          tools: composer
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
-
-      - name: Run Laravel Pint (check mode)
-        run: vendor/bin/pint
-
-  # frontend-tests for Vue (Vitest) tests
+  # 2️⃣ FRONTEND TESTS (Vue / Vitest)
   frontend-tests:
-    needs: [laravel-tests , lint]
+    needs: laravel-tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -87,8 +66,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Vitest unit tests (with coverage)
-        run:  npm run test:coverage
+      - name: Run Vitest unit tests
+        run: npm run test:coverage
 
       - name: Upload coverage report
         if: always()
@@ -96,3 +75,24 @@ jobs:
         with:
           name: frontend-coverage
           path: frontend/coverage
+
+  # 3️⃣ (OPTIONAL) LINT JOB — after frontend-tests
+  lint:
+    needs: frontend-tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Run Laravel Pint (check mode)
+        run: vendor/bin/pint
