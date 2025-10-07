@@ -7,9 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  # ---------------------------
-  # BACKEND: TESTS (Laravel)
-  # ---------------------------
+  # Backend Tests
   backend-tests:
     runs-on: ubuntu-latest
     defaults:
@@ -17,6 +15,7 @@ jobs:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
@@ -46,10 +45,9 @@ jobs:
           DB_DATABASE: database/database.sqlite
         run: php artisan test
 
-  # ---------------------------
-  # FRONTEND: TESTS (Vue / Vitest)
-  # ---------------------------
+  # Frontend Tests
   frontend-tests:
+    needs: backend-tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -67,7 +65,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Vitest (coverage)
+      - name: Run Vitest unit tests
         run: npm run test:coverage
 
       - name: Upload coverage report
@@ -77,59 +75,81 @@ jobs:
           name: frontend-coverage
           path: frontend/coverage
 
-      - name: Build Frontend (optional)
+      - name: List coverage files
+        run: ls -R frontend/coverage
+
+      - name: Display coverage summary
+        run: cat frontend/coverage/coverage-summary.txt
+
+      - name: Display coverage lcov report
+        run: head -n 20 frontend/coverage/lcov.info
+
+      - name: Build Frontend
         run: npm run build
 
-  # ---------------------------
-  # BACKEND: Lint (optional)
-  # ---------------------------
-  backend-lint:
+  # Linting for Backend
+  lint:
+    needs: backend-tests
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./backend
     steps:
       - uses: actions/checkout@v4
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           tools: composer
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
+
       - name: Run Laravel Pint (check mode)
         run: vendor/bin/pint
 
-  # ---------------------------
-  # FRONTEND: Lint (optional)
-  # ---------------------------
+  # Linting for Frontend
   frontend-lint:
+    needs: frontend-tests
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./frontend
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
         run: npm ci
+
       - name: Run ESLint
         run: npm run lint
 
-  # ---------------------------
-  # FINAL META JOB (summary)
-  # ---------------------------
-  final-summary:
-    needs: [backend-tests, frontend-tests, backend-lint, frontend-lint]
+  # Final Test Job
+  test:
+    needs: [backend-tests, frontend-tests, lint, frontend-lint]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
-      - name: All jobs completed 🎉
-        run: |
-          echo "✅ Backend tests passed"
-          echo "✅ Frontend tests passed"
-          echo "✅ Backend lint passed"
-          echo "✅ Frontend lint passed"
+      - uses: actions/checkout@v4
+      
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, bcmath, sqlite3, curl, dom, fileinfo, gd, pdo, tokenizer
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Run Tests
+        env:
+          APP_ENV: testing
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan test
