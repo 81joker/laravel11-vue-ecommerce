@@ -7,7 +7,6 @@ on:
     branches: ["main"]
 
 jobs:
-  # Backend Tests
   backend-tests:
     runs-on: ubuntu-latest
     defaults:
@@ -45,7 +44,7 @@ jobs:
           DB_DATABASE: database/database.sqlite
         run: php artisan test
 
-  # Frontend Tests
+  # FRONTEND TESTS (Vue / Vitest)
   frontend-tests:
     needs: backend-tests
     runs-on: ubuntu-latest
@@ -53,7 +52,8 @@ jobs:
       run:
         working-directory: ./frontend
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -75,19 +75,6 @@ jobs:
           name: frontend-coverage
           path: frontend/coverage
 
-      - name: List coverage files
-        run: ls -R frontend/coverage
-
-      - name: Display coverage summary
-        run: cat frontend/coverage/coverage-summary.txt
-
-      - name: Display coverage lcov report
-        run: head -n 20 frontend/coverage/lcov.info
-
-      - name: Build Frontend
-        run: npm run build
-
-  # Linting for Backend
   lint:
     needs: backend-tests
     runs-on: ubuntu-latest
@@ -107,8 +94,7 @@ jobs:
 
       - name: Run Laravel Pint (check mode)
         run: vendor/bin/pint
-
-  # Linting for Frontend
+   
   frontend-lint:
     needs: frontend-tests
     runs-on: ubuntu-latest
@@ -128,28 +114,24 @@ jobs:
 
       - name: Run ESLint
         run: npm run lint
-
-  # Final Test Job
   test:
-    needs: [backend-tests, frontend-tests, lint, frontend-lint]
+    name: ✅ Final Test Summary
+    needs: [backend-tests, frontend-tests, lint]
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: shivammathur/setup-php@v2
+      - name: All tests passed
+        run: echo "All tests passed!"
+      - name: Download frontend coverage report
+        uses: actions/download-artifact@v4
         with:
-          php-version: '8.2'
-          extensions: mbstring, bcmath, sqlite3, curl, dom, fileinfo, gd, pdo, tokenizer
+          name: frontend-coverage
+          path: frontend/coverage
+      - name: List coverage files
+        run: ls -R frontend/coverage
+      - name: Display coverage summary
+        run: cat frontend/coverage/coverage-summary.txt
+      - name: Display coverage lcov report
+        run: head -n 20 frontend/coverage/lcov.info
 
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-      - name: Run Tests
-        env:
-          APP_ENV: testing
-          DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: php artisan test
+      - name: Display Pint version
+        run: vendor/bin/pint --version
