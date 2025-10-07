@@ -3,15 +3,13 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { API_BASE_URL } from '../helpers/config'
-import ProductList from '@/components/products/ProductList.vue'
-import { errorMessages } from 'vue/compiler-sfc'
 export const useProductStore = defineStore('products', {
   state: () => ({ 
     product: null,
     productThumbnail: '',
     productImages: [],
     isLoading: false,
-    errorMessages: null,
+    error: null,
 
 
   }),

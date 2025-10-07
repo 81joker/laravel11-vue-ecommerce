@@ -53,9 +53,9 @@
           </div>
           <div class="d-flex flex-wrap justify-content-start">
             <div
-              class="border border-light-subtle shadow-sm border-2 rounded mb-1 me-1"
-              v-for="color in productStore.product.colors"
+                        :class="`${data.chosenColor?.id === color.id ? 'border border-light-subtle shadow-sm border-2 rounded' : ''}  mb-1 me-1`"               v-for="color in productStore.product.colors"
               :key="color.id"
+                @click="setChosenColor(color)"
               :style="{
                 backgroundColor: color.name,
                 width: '30px',
@@ -69,12 +69,26 @@
             class="d-flex flex-wrap justify-content-start align-items-center mb-4"
           >
             <button
-              class="btn btn-sm btn-outline-secondary mb-3 mx-1"
+               :class="`${data.chosenSize?.id === size.id ? 'btn btn-danger mb-3 mx-1 rounded-0' : 'btn btn-sm btn-outline-secondary mb-3 mx-1'}`"
               v-for="size in productStore.product.sizes"
+                @click="setChosenSize(size)"
               :key="size.id"
             >
               {{ size.name }}
             </button>
+          </div>
+
+          <div>
+            <span
+              class="badge text-bg-success"
+              v-if="productStore.product?.status"
+              >In Stock</span
+            >
+            <span
+              class="badge text-bg-warning"
+              v-else
+              >Out of Stock</span
+            >
           </div>
 
           <div class="my-3 d-inline-flex">
@@ -131,34 +145,19 @@ const data = reactive({
   chosenColor: null,
   chosenSize: null,
 });
+
+// Set the chosen Color by user
+const setChosenColor = (color) => {
+  data.chosenColor = color;
+};
+
+// Set the chosen Size by user
+const setChosenSize = (size) => {
+  data.chosenSize = size;
+};
+
 const product = productStore.product;
 onMounted(() => {
   productStore.fetchProduct(route.params.slug);
 });
 </script>
-
-           <!-- <vue-image-zoomer 
-                img-class="img-fluid rounded" 
-	         :regular="productStore.product?.thumbnail"
-        :zoom="productStore.product?.thumbnail"
-        zoom-width="500"
-        zoom-height="500"
-        zoom-style="border: 1px solid #ccc;"
-        lens-style="border: 1px solid #ccc; background-color: rgba(255, 255, 255, 0.4);"
-        zoom-position="right"
-        zoom-level="2"
-        :enable-scroll-zoom="true"
-        :enable-mouse-wheel="true"
-        :enable-click-zoom="true"
-        :enable-touch-zoom="true"
-        :enable-lens="true"
-        :enable-zoom="true"
-        :enable-fullscreen="true"
-        :fullscreen-icon="true"
-        :fullscreen-style="{width: '100%', height: '100%'}"
-        :lens-width="100"
-        :lens-height="100"
-        :cursor="'crosshair'"
-        
-        >
-</vue-image-zoomer> -->
