@@ -94,3 +94,12 @@ jobs:
 
       - name: Run Laravel Pint (check mode)
         run: vendor/bin/pint
+   
+  test:
+    name: ✅ Final Test Summary
+    needs: [backend-tests, frontend-tests, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: All tests completed successfully 🎉
+        run: echo "✅ All backend, frontend, and lint checks passed successfully!"
+          
