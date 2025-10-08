@@ -1,5 +1,8 @@
 <template>
   <div class="product">
+    <pre>
+        {{ cartStore.cartItems }}
+    </pre>
     <Spinner :store="productStore" />
     <div v-if="productStore.product">
       <div class="row">
@@ -167,6 +170,8 @@ import { makeUniqueId } from "@/helpers/config.js";
 const productStore = useProductStore();
 const cartStore = useCartStore();
 const route = useRoute();
+
+
 
 const data = reactive({
   qty: 1,

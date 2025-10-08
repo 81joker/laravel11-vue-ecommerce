@@ -46,8 +46,18 @@
                 <i class="bi bi-box-arrow-right"></i> Login
               </router-link>
             </li>
-
         </ul>
+        <li class="nav-item">
+            <router-link
+              class="nav-link"
+              aria-current="page"
+              to="/cart"
+            >
+              <i class="bi bi-cart-plus"></i> Cart ({{
+                cartStore.cartItems.length
+              }})
+            </router-link>
+          </li>
         </ul>
       </div>
     </div>
@@ -55,7 +65,8 @@
 </template>
 
 <script setup>
-
+import { useCartStore } from '@/stores/useCartStore'
+const cartStore = useCartStore()
 </script>
 
 <style scoped>
