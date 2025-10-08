@@ -13,6 +13,7 @@ export const useProductStore = defineStore('products', {
     isLoading: false,
     filter: null,
   }),
+  persist: true,
   actions: {
         async fetchAllProducts() {
         this.isLoading = true

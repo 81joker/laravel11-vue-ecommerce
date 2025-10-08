@@ -74,8 +74,7 @@
                 </table>
                 <div class="d-flex justify-content-center">
                     <div class="border border-dark border-3 fw-bold p-2 rounded">
-                        <!-- Total: <span class="text-danger">${{ total }}</span> -->
-                        Total: <span class="text-danger">${{ product.qty * product.price }}</span>
+                        Total: <span class="text-danger">${{ total }}</span>
                     </div>
                 </div>
             </div>
@@ -97,7 +96,7 @@
 <script setup>
     import { computed } from "vue"
     import { useCartStore } from "../../stores/useCartStore"
-    // import Alert from "../layouts/Alert.vue"
+    import Alert from "../layouts/Alert.vue"
 
     //define the cart store
     const cartStore = useCartStore()

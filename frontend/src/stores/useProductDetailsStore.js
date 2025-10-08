@@ -3,7 +3,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { API_BASE_URL } from '../helpers/config'
-export const useProductStore = defineStore('products', {
+export const useProductDetailsStore = defineStore('product', {
   state: () => ({ 
     product: null,
     productThumbnail: '',
@@ -13,6 +13,7 @@ export const useProductStore = defineStore('products', {
 
 
   }),
+  persist: true,
   actions: {
         async fetchProduct(slug) {
         this.productImages = []

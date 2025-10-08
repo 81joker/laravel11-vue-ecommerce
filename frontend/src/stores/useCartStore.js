@@ -32,7 +32,7 @@ export const useCartStore = defineStore("cart", {
         });
       }
     },
-    incrementQuantity(item) {
+    incrementQty(item) {
       let index = this.cartItems.findIndex(
         (product) =>
           product.id === item.id &&
@@ -48,7 +48,7 @@ export const useCartStore = defineStore("cart", {
       }
       // this.cartItems[index].qty += 1;
     },
-    decrementQuantity(item) {
+    decrementQty(item) {
       let index = this.cartItems.findIndex(
         (product) =>
           product.id === item.id &&

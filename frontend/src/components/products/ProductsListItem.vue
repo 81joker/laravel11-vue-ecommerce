@@ -42,5 +42,6 @@
 <script setup>
 defineProps({
   product: Object,
+  required: true
 });
 </script>

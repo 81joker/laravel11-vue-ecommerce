@@ -25,6 +25,12 @@ Key benefits:
 12- Display the product detials
 13- Create the store add cart 
 14- for Notidafaction i use the libary [Vue Toastification](https://github.com/Maronato/vue-toastification)
+
+
+
+15- install [Pinia Plugin Persistedstate](https://www.npmjs.com/package/pinia-plugin-persistedstate)The pinia-plugin-persistedstate allows automatic state persistence in Pinia stores using localStorage or sessionStorage, enhancing user experience by retaining state across sessions.
+
+
 +++++++++++++++++++++++++++++++++++++++++++++++
 What is Pinia?
 

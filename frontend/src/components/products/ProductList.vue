@@ -44,7 +44,6 @@ const data = reactive({
     productToShow: 4
 })
 
-
 // define the function to load more products
 const loadMoreProducts = ()  => {
     if (data.productToShow < productStore.products.length) {

@@ -1,8 +1,5 @@
 <template>
   <div class="product">
-    <pre>
-        {{ cartStore.cartItems }}
-    </pre>
     <Spinner :store="productStore" />
     <div v-if="productStore.product">
       <div class="row">
@@ -30,11 +27,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <pre>
-                {{ productStore.product }}
-            </pre> -->
-
         <div class="col-md-5 mx-auto">
           <h5 class="my-3">{{ productStore.product.name }}</h5>
           <div class="d-inline-flex">
@@ -132,25 +124,6 @@
                   })
                 "
               >
-              <!-- <button
-                class="btn btn-danger btn-block"
-                
-                @click="
-                  cartStore.addToCart({
-                    ref: makeUniqueId(10),
-                    product_id: productStore.product?.id,
-                    name: productStore.product?.name,
-                    slug: productStore.product?.slug,
-                    qty: data.qty,
-                    price: productStore.product?.price,
-                    color: data.chosenColor?.name,
-                    size: data.chosenSize?.name,
-                    maxQty: productStore.product?.qty,
-                    image: productStore.product?.thumbnail,
-                    coupon_id: null,
-                  })
-                "
-              > -->
                 <i class="bi bi-cart-plus"></i> Add to cart
               </button>
             </div>
@@ -163,11 +136,11 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
-import { useProductStore } from "@/stores/useProductDetailsStore";
+import { useProductDetailsStore } from "@/stores/useProductDetailsStore";
 import { useCartStore } from "@/stores/useCartStore";
 import Spinner from "@/components/layouts/Spinner.vue";
 import { makeUniqueId } from "@/helpers/config.js";
-const productStore = useProductStore();
+const productStore = useProductDetailsStore();
 const cartStore = useCartStore();
 const route = useRoute();
 
@@ -189,7 +162,6 @@ const setChosenSize = (size) => {
   data.chosenSize = size;
 };
 
-const product = productStore.product;
 onMounted(() => {
   productStore.fetchProduct(route.params.slug);
 });
