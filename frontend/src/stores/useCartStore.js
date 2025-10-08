@@ -12,6 +12,7 @@ export const useCartStore = defineStore("cart", {
     // cartTotal: 0,
     isLoading: false,
   }),
+    persist: true,
   actions: {
     async addToCart(item) {
       let index = this.cartItems.findIndex(
