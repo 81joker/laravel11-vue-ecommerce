@@ -45,7 +45,10 @@ export const useCartStore = defineStore("cart", {
           ? toast.error(`You can only add up to ${item.maxQty} items`, {
               timeout: 2000,
             })
-          : (this.cartItems[index].qty += 1);
+          : (this.cartItems[index].qty += 1)
+            toast.success("Product quantity increased", {
+              timeout: 2000,
+            });
       }
       // this.cartItems[index].qty += 1;
     },
@@ -65,6 +68,9 @@ export const useCartStore = defineStore("cart", {
         );
         //if the product exists
         if (index !== -1) {
+          toast.info("Product quantity decreased", {
+            timeout: 2000,
+          });
           this.cartItems[index].qty -= 1;
           if (this.cartItems[index].qty === 0) {
             this.cartItems = this.cartItems.filter(
