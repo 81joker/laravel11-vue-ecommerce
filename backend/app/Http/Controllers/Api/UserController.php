@@ -30,6 +30,7 @@ class UserController extends Controller
                 'message' => 'Acount created successfully',
                 // 'user' => $user
             ], 201);
+
         }
     }
 
