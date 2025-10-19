@@ -20,11 +20,11 @@ class UserController extends Controller
     {
 
         if ($request->validated()) {
-            // $user = new \App\Models\User();
-            // $user->name = $request->name;
-            // $user->email = $request->email;
-            // $user->password = bcrypt($request->password);
-            // $user->save();
+            $user = new \App\Models\User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
 
             return response()->json([
                 'message' => 'Acount created successfully',
@@ -61,57 +61,66 @@ class UserController extends Controller
      */
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json([
-            'message' => 'Logged out successfully'
-        ]);
+        $user = $request->user();              // same as auth('sanctum')->user()
+
+        if (!$user) {
+            // If the route wasn't protected or token missing
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+        // Revoke just the current token (personal access token flow)
+        $user->currentAccessToken()?->delete();
+
+        // Or, to revoke all tokens:  $user->tokens()->delete();
+
+        return response()->json(['message' => 'Logged out']);
     }
 
     /**
      * Update User Profile
      */
-    public function updateUserProfile(Request $request)
-    {
+    // public function updateUserProfile(Request $request)
+    // {
 
-        if ($request->validate([
-            'image_profile' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-        ])) {
-        }
-        if ($request->hasFile('image_profile')) {
-            // check old image exestes and delete
-            if (File::exists(asset($request->user()->image_profile))) {
-                File::delete(asset($request->user()->image_profile));
-            }
-            // store new image
-            $profile_image_name = time() . '.' . $file->getClientOriginalName();
-            $file->storeAs('images/users', $profile_image_name, 'public');
-            $request->user()->update([
-                'profile_image' => 'storage/images/users/' . $profile_image_name,
-            ]);
-            // return the response
-            return response()->json([
-                'message' => 'Profile image updated successfully',
-                'user' => UserResource::make($request->user())
-            ]);
-            // $profile_image_name = time().'.'.$request->image_profile->extension();
-            // $request->image_profile->move(public_path('images'), $image_name);
-            // $request->user()->image_profile = 'images/'.$image_name;
-            // $request->user()->save();
+    //     if ($request->validate([
+    //         'image_profile' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+    //     ])) {
+    //     }
+    //     if ($request->hasFile('image_profile')) {
+    //         // check old image exestes and delete
+    //         if (File::exists(asset($request->user()->image_profile))) {
+    //             File::delete(asset($request->user()->image_profile));
+    //         }
+    //         // store new image
+    //         $profile_image_name = time() . '.' . $file->getClientOriginalName();
+    //         $file->storeAs('images/users', $profile_image_name, 'public');
+    //         $request->user()->update([
+    //             'profile_image' => 'storage/images/users/' . $profile_image_name,
+    //         ]);
+    //         // return the response
+    //         return response()->json([
+    //             'message' => 'Profile image updated successfully',
+    //             'user' => UserResource::make($request->user())
+    //         ]);
+    //         // $profile_image_name = time().'.'.$request->image_profile->extension();
+    //         // $request->image_profile->move(public_path('images'), $image_name);
+    //         // $request->user()->image_profile = 'images/'.$image_name;
+    //         // $request->user()->save();
 
-        } else {
-            $request->user()->update([
-                'country' => $request->country,
-                'city' => $request->city,
-                'address' => $request->address,
-                'zip_code' => $request->zip_code,
-                'phone_number' => $request->phone_number,
-                'profile_completed' => 1,
-            ]);
-            //return the response
-            return response()->json([
-                'user' => UserResource::make($request->user()),
-                'message' => 'Profile updated successfully'
-            ]);
-        }
-    }
+    //     } else {
+    //         $request->user()->update([
+    //             'country' => $request->country,
+    //             'city' => $request->city,
+    //             'address' => $request->address,
+    //             'zip_code' => $request->zip_code,
+    //             'phone_number' => $request->phone_number,
+    //             'profile_completed' => 1,
+    //         ]);
+    //         //return the response
+    //         return response()->json([
+    //             'user' => UserResource::make($request->user()),
+    //             'message' => 'Profile updated successfully'
+    //         ]);
+    //     }
+    // }
 }

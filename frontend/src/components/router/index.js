@@ -17,27 +17,9 @@ function checkIfUserIsNotLoggedIn() {
     const authStore = useAuthStore();
     if (authStore.isLoggedIn) return '/';
 }
-// function checkIfUserIsLoggedIn(to, from, next) {
-//     const user = localStorage.getItem('user');
-//     if (!user) {
-//         next('/login');
-//     } else {
-//         next();
-//     }
-// }
-
-// function checkIfUserIsLoggedOut(to, from, next) {
-//     const user = localStorage.getItem('user');
-//     if (user) {
-//         next('/');
-//     } else {
-//         next();
-//     }
-
 
 const router = createRouter({
-    // history: createWebHistory(),  
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(),
 
     routes: [
         {
@@ -46,15 +28,15 @@ const router = createRouter({
             component: Home
         },
         {
-            path: '/login',
-            name: 'Login',
-            component: Login,
-            beforeEnter: [checkIfUserIsLoggedIn]
+            path: '/register',
+            name: 'register',
+            component: Register,
+            beforeEnter: [checkIfUserIsNotLoggedIn]
         },
         {
-            path: '/register',
-            name: 'Register',
-            component: Register,
+            path: '/login',
+            name: 'login',
+            component: Login,
             beforeEnter: [checkIfUserIsNotLoggedIn]
         },
         {
