@@ -2,7 +2,9 @@
     <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-header bg-white">
-                <h5 class="text-center my-2">Update Your Information</h5>
+                <h5 class="text-center my-2">
+                  {{ updatingProfileTitle ? 'User Details' : 'Billing Details' }}
+                </h5>
             </div>
             <div class="card-body">
          <form class="mt-5" @submit.prevent="updateUserInfos">
@@ -73,7 +75,7 @@
                     </div>
                     <div class="mb-3">
                         <button
-                            type="submit"
+                            v-if="!authStore.user?.profile_completed || updatingProfileTitle"                            type="submit"
                             class="btn btn-sm btn-dark rounded-0"
                         >
                             Submit
@@ -101,6 +103,14 @@ const data = reactive({
     zip_code: "",
     city: "",
     address: "",
+  },
+});
+
+const props = defineProps({
+  updatingProfileTitle: {
+    type: Boolean,
+    default: false,
+    required: false,
   },
 });
 

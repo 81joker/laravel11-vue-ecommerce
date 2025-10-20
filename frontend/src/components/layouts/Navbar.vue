@@ -52,7 +52,7 @@
               </router-link>
             </li>
           </ul>
-          <li class="nav-item">
+          <li class="nav-item" v-if="authStore.isLoggedIn">
             <router-link class="nav-link" aria-current="page" to="/cart">
               <i class="bi bi-cart-plus"></i> Cart ({{
                 cartStore.cartItems.length

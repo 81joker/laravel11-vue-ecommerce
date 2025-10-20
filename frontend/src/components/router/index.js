@@ -4,6 +4,7 @@ import Login from '@/components/auth/Login.vue'
 import Register from '@/components/auth/Register.vue'
 import Product from '../products/Product.vue'
 import Cart from '../cart/Cart.vue'
+import Checkout from '../checkout/Checkout.vue'
 import { useAuthStore } from '../../stores/useAuthStore'
 import Profile from '../profile/Profile.vue'
 
@@ -54,7 +55,14 @@ const router = createRouter({
         {
             path: '/cart',
             name: 'cart',
-            component: Cart
+            component: Cart,
+            beforeEnter: [checkIfUserIsLoggedIn]
+        },
+        {
+            path: '/checkout',
+            name: 'checkout',
+            component: Checkout,
+            beforeEnter: [checkIfUserIsLoggedIn]
         },
     
         // { 

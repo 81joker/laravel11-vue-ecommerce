@@ -2,7 +2,7 @@
  <div class="row py-5">
 
     <ProfileSidebar />
-    <UpdateUserInfos />
+    <UpdateUserInfos  :updatingProfileTitle="true"/>
  </div>
 </template>
 
