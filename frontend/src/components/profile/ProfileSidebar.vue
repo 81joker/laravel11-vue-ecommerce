@@ -31,7 +31,33 @@
                     Upload
                 </button>
             </div>
-
+            
+            <ul class="list-group w-100 test-center mt-2">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <i class="bi bi-person">Name</i> 
+                    <span class="badge bg-dark rounded-pill">  {{ authStore.user?.name }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <i class="bi bi-envelope-at-fill">Email</i>
+                    <span class="badge bg-dark rounded-pill">{{ authStore.user?.email }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <i class="bi bi-telephone-fill">Phone Number</i> 
+                    <span class="badge bg-dark rounded-pill">{{ authStore.user?.phone_number || 'N/A' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <i class="bi bi-house-door-fill">Address</i>
+                    <span class="badge bg-dark rounded-pill">{{ authStore.user?.address || 'N/A' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <i class="bi bi-geo-alt-fill">City</i>
+                    <span class="badge bg-dark rounded-pill">{{ authStore.user?.city || 'N/A' }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <i class="bi bi-geo-alt-fill">Zip Code</i>
+                    <span class="badge bg-dark rounded-pill">{{ authStore.user?.zip_code || 'N/A' }}</span>
+                </li>
+            </ul>
         </div>
     </div>
   </div>
