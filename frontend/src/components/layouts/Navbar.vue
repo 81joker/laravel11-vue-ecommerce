@@ -41,7 +41,7 @@
           </ul>
           <ul class="navbar-nav" v-else>
             <li class="nav-item">
-              <router-link class="nav-link" aria-current="page" to="#">
+              <router-link class="nav-link" aria-current="page" to="/profile">
                 <i class="bi bi-person-check-fill"></i>
                 {{ authStore.user.name }}
               </router-link>
@@ -112,7 +112,7 @@ const fetchCurrentUser = async () => {
     );
     authStore.setIsLoggedIn();
     authStore.setUser(response.data.user);
-    authStore.setAccessToken(response.data.access_token);
+    authStore.setToken(response.data.access_token);
   } catch (error) {
     if (error.response && error.response.status === 401) {
       // Token is invalid or expired

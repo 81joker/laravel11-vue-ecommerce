@@ -5,6 +5,7 @@ import Register from '@/components/auth/Register.vue'
 import Product from '../products/Product.vue'
 import Cart from '../cart/Cart.vue'
 import { useAuthStore } from '../../stores/useAuthStore'
+import Profile from '../profile/Profile.vue'
 
 
 // add route guard 
@@ -43,6 +44,12 @@ const router = createRouter({
             path: '/product/:slug',
             name: 'product',
             component: Product
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: Profile,
+            beforeEnter: [checkIfUserIsLoggedIn]
         },
         {
             path: '/cart',

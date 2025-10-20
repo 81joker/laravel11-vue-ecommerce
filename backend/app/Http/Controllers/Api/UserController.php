@@ -76,51 +76,48 @@ class UserController extends Controller
         return response()->json(['message' => 'Logged out']);
     }
 
-    /**
-     * Update User Profile
+
+    /***
+     * Update user infos
      */
-    // public function updateUserProfile(Request $request)
-    // {
+    public function UpdateUserProfile(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'image|mimes:png,jpg,jpeg,webp|max:2048'
+        ]);
 
-    //     if ($request->validate([
-    //         'image_profile' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-    //     ])) {
-    //     }
-    //     if ($request->hasFile('image_profile')) {
-    //         // check old image exestes and delete
-    //         if (File::exists(asset($request->user()->image_profile))) {
-    //             File::delete(asset($request->user()->image_profile));
-    //         }
-    //         // store new image
-    //         $profile_image_name = time() . '.' . $file->getClientOriginalName();
-    //         $file->storeAs('images/users', $profile_image_name, 'public');
-    //         $request->user()->update([
-    //             'profile_image' => 'storage/images/users/' . $profile_image_name,
-    //         ]);
-    //         // return the response
-    //         return response()->json([
-    //             'message' => 'Profile image updated successfully',
-    //             'user' => UserResource::make($request->user())
-    //         ]);
-    //         // $profile_image_name = time().'.'.$request->image_profile->extension();
-    //         // $request->image_profile->move(public_path('images'), $image_name);
-    //         // $request->user()->image_profile = 'images/'.$image_name;
-    //         // $request->user()->save();
-
-    //     } else {
-    //         $request->user()->update([
-    //             'country' => $request->country,
-    //             'city' => $request->city,
-    //             'address' => $request->address,
-    //             'zip_code' => $request->zip_code,
-    //             'phone_number' => $request->phone_number,
-    //             'profile_completed' => 1,
-    //         ]);
-    //         //return the response
-    //         return response()->json([
-    //             'user' => UserResource::make($request->user()),
-    //             'message' => 'Profile updated successfully'
-    //         ]);
-    //     }
-    // }
+        if($request->has('profile_image')) {
+            //check if the old image exists and remove it
+            if(File::exists(public_path($request->user()->profile_image))) {
+                File::delete(public_path($request->user()->profile_image));
+            }
+            //store the user profile image 
+            $file = $request->file('profile_image');
+            $profile_image_name = time().'_'.$file->getClientOriginalName();
+            $file->storeAs('images/users',$profile_image_name,'public');
+            //update the user profile image
+            $request->user()->update([
+                'profile_image' => 'storage/images/users/'.$profile_image_name
+            ]);
+            //return the response
+            return response()->json([
+                'user' => UserResource::make($request->user()),
+                'message' => 'Profile image has been updated successfully'
+            ]);
+        }else {
+            $request->user()->update([
+                'country' => $request->country,
+                'city' => $request->city,
+                'address' => $request->address,
+                'zip_code' => $request->zip_code,
+                'phone_number' => $request->phone_number,
+                'profile_completed' => 1
+            ]);
+            //return the response
+            return response()->json([
+                'user' => UserResource::make($request->user()),
+                'message' => 'Profile updated successfully'
+            ]);
+        }
+    }
 }

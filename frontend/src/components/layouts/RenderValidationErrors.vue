@@ -1,5 +1,5 @@
 <template>
-   <div class="row m-3">
+   <div class="row">
     <div class="col-md-8 mx-auto">
         <ul class="list-group my-2" v-for="(validationErrors,index) in formValidationErrors"
             :key="index">
