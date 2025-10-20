@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Coupon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\ColoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 
 Route::get('/',[AdminController::class,'login'])->name('admin.login');
@@ -75,6 +77,18 @@ Route::prefix('admin')->middleware('admin')->group(function () {
             'edit' => 'admin.products.edit',
             'update' => 'admin.products.update',
             'destroy' => 'admin.products.destroy',
+        ]
+    ]);
+
+    //coupons routes
+    Route::resource("coupons",CouponController::class,[
+        'names' => [
+            'index' => 'admin.coupons.index',
+            'create' => 'admin.coupons.create',
+            'store' => 'admin.coupons.store',
+            'edit' => 'admin.coupons.edit',
+            'update' => 'admin.coupons.update',
+            'destroy' => 'admin.coupons.destroy',
         ]
     ]);
 });

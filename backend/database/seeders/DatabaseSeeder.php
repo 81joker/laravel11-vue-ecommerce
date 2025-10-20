@@ -7,7 +7,14 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Database\Seeders\SizeSeeder;
 use Database\Seeders\AdminSeeder;
+use Database\Seeders\BrandSeeder;
+use Database\Seeders\ColorSeeder;
+use Database\Seeders\CouponSeeder;
+use Database\Seeders\ProducSeeder;
+use Database\Seeders\ProductSizeSeeder;
+use Database\Seeders\ColorProductSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,6 +42,7 @@ class DatabaseSeeder extends Seeder
             ProducSeeder::class,
             ColorProductSeeder::class,
             ProductSizeSeeder::class,
+            CouponSeeder::class,
         ]);
     }
 }
