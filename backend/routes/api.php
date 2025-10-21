@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -18,8 +17,8 @@ Route::middleware('auth:sanctum')->group(function() {
     });
     Route::post('user/logout',[UserController::class,'logout']);
     Route::put('user/update/profile',[UserController::class,'UpdateUserProfile']);
-    //coupon routes
-    // Route::post('apply/coupon',[CouponController::class,'applyCoupon']);
+    // coupon routes
+    Route::post('apply/coupon',[CouponController::class,'applyCoupon']);
     //order routes
     // Route::post('store/order',[OrderController::class,'storeUserOrders']);
     // Route::post('pay/order',[OrderController::class,'payOrdersByStripe']);
