@@ -2,6 +2,7 @@
   <div class="row my-3">
     <UpdateUserInfos :updatingProfileTitle="false" />
     <div class="col-md-4">
+      <Copoun />
       <ul class="list-group">
         <li
           class="list-group-item d-flex"
@@ -37,21 +38,22 @@
           </div>
         </li>
         <li class="list-group-item d-flex justify-content-between">
-          <span class="fw-bold"> Discount (0)% </span>
-          <span class="fw-normal text-danger">
-            $0.00
+          <span class="fw-bold"> Discount ({{ cartStore.validCoupon.discount ?? 0 }})% </span>
+          <span class="fw-normal text-danger" v-if="cartStore.validCoupon?.name">
+            {{ cartStore.validCoupon.name }}
             <i
               class="bi bi-trash"
               :style="{
                 cursor: 'pointer',
               }"
+              @click="removeCoupon"
             ></i>
           </span>
-          <span class="fw-bold text-danger"> -$0.00 </span>
+          <span class="fw-bold text-danger"> -${{ calulateDiscount() }} </span>
         </li>
         <li class="list-group-item d-flex justify-content-between">
           <span class="fw-bold"> Total </span>
-          <span class="fw-bold text-danger"> $ finalTotal </span>
+          <span class="fw-bold text-danger"> $ {{ finalTotal() }} </span>
         </li>
       </ul>
       <div class="my-3">
@@ -76,7 +78,7 @@ import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import Alert from "../layouts/Alert.vue";
 import UpdateUserInfos from "../profile/UpdateUserInfos.vue";
-
+import Copoun from "../coupons/Coupon.vue";
 // define the store
 const authStore = useAuthStore();
 const cartStore = useCartStore();
@@ -88,12 +90,39 @@ const router = useRouter();
 const toast = useToast();
 
 // Calculate the cart total
-const total = computed(() => {
-  return cartStore.cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0
-  );
-});
+const totalOfCartItems = cartStore.cartItems.reduce(
+  (total, item) => total + item.price * item.qty,
+  0
+);
+
+// calculate discount if copoun is applied
+const calulateDiscount = () => totalOfCartItems * cartStore.validCoupon.discount / 100
+// {
+//   if (cartStore.validCoupon?.discount) {
+//     return (totalOfCartItems * cartStore.validCoupon.discount) / 100;
+//   }
+//   return 0;
+// };
+// final total after discount
+// const finalTotal = computed(() => {
+//   if (cartStore.validCoupon?.discount) {
+
+//     return (totalOfCartItems - calulateDiscount()).toFixed(2);
+//   }
+//   return totalOfCartItems.toFixed(2);
+// });
+
+const finalTotal = () => totalOfCartItems - calulateDiscount()
+
+// remove copoun function
+const removeCoupon = () => {
+  // cartStore.setValidCoupon({'name': '', 'discount': 0});
+  cartStore.setValidCoupon({});
+  cartStore.addCopouonToCartItem(null);
+  toast.success("Coupon removed successfully.", {
+    timeout: 2000,
+  });
+};
 
 // redirect if cart is empty
 onMounted(() => {

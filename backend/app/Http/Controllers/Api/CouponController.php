@@ -23,9 +23,10 @@ class CouponController extends Controller
             ]);
         } else {
             return response()->json([
-                'success' => false,
-                'message' => 'Invalid or expired coupon.'
-            ], 404);
+                // 'success' => false,
+                'error' => 'Invalid or expired coupon.'
+                // 'error' => 'Invalid or expired coupon.Failed to apply coupon. Please try again.'
+            ]);
         }
     }
 }

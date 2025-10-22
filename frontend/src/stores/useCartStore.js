@@ -1,18 +1,19 @@
 import { defineStore } from "pinia";
 import { useToast } from "vue-toastification";
 
-import axios from "axios";
 
 const toast = useToast();
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
     cartItems: [],
-    // cartCount: 0,
-    // cartTotal: 0,
-    isLoading: false,
+    validCoupon: {
+      name: "",
+      discount: 0,
+    },
+    uniqueHash: "",
   }),
-    persist: true,
+  persist: true,
   actions: {
     async addToCart(item) {
       let index = this.cartItems.findIndex(
@@ -43,12 +44,12 @@ export const useCartStore = defineStore("cart", {
       if (index !== -1) {
         this.cartItems[index].qty === item.maxQty
           ? toast.error(`You can only add up to ${item.maxQty} items`, {
-              timeout: 2000,
-            })
+            timeout: 2000,
+          })
           : (this.cartItems[index].qty += 1)
-            toast.success("Product quantity increased", {
-              timeout: 2000,
-            });
+        toast.success("Product quantity increased", {
+          timeout: 2000,
+        });
       }
       // this.cartItems[index].qty += 1;
     },
@@ -81,14 +82,14 @@ export const useCartStore = defineStore("cart", {
       }
     },
     removeFromCart(item) {
-      
-    //     this.cartItems = this.cartItems.filter(
-    //           (product) => product.ref !== item.ref
-    //         );
-    //     toast.success("Product removed from cart", {
-    //       timeout: 2000,
-    //     });
-    //   return;
+
+      //     this.cartItems = this.cartItems.filter(
+      //           (product) => product.ref !== item.ref
+      //         );
+      //     toast.success("Product removed from cart", {
+      //       timeout: 2000,
+      //     });
+      //   return;
       // Remove item based on id, color, and size
       this.cartItems = this.cartItems.filter(
         (product) =>
@@ -105,5 +106,16 @@ export const useCartStore = defineStore("cart", {
     clearCartItems() {
       this.cartItems = [];
     },
+    setValidCoupon(coupon) {
+      this.validCoupon = coupon;
+    },
+    addCopouonToCartItem(coupon_id) {
+      this.cartItems = this.cartItems.map((item) => {
+        return { ...item, coupon_id: coupon_id };
+      })
+    },
+    setUniqueHash(hash) {
+      this.uniqueHash = hash;
+    },
   },
-});
+  });

@@ -121,6 +121,7 @@
                     size: data.chosenSize?.name,
                     maxQty: productStore.product?.qty,
                     image: productStore.product?.thumbnail,
+                    coupon_id: null,
                   })
                 "
               >
