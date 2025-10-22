@@ -19,9 +19,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::put('user/update/profile',[UserController::class,'UpdateUserProfile']);
     // coupon routes
     Route::post('apply/coupon',[CouponController::class,'applyCoupon']);
-    //order routes
-    // Route::post('store/order',[OrderController::class,'storeUserOrders']);
-    // Route::post('pay/order',[OrderController::class,'payOrdersByStripe']);
+    // order routes
+    Route::post('store/order',[OrderController::class,'storeUserOrders']);
+    Route::post('pay/order',[OrderController::class,'payOrdersByStripe']);
     // //reviews routes
     // Route::post('store/review',[ReviewController::class,'store']);
     // Route::put('update/review',[ReviewController::class,'update']);

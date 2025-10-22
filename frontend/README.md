@@ -30,6 +30,14 @@ Key benefits:
 
 15- install [Pinia Plugin Persistedstate](https://www.npmjs.com/package/pinia-plugin-persistedstate)The pinia-plugin-persistedstate allows automatic state persistence in Pinia stores using localStorage or sessionStorage, enhancing user experience by retaining state across sessions.
 
+16- Install strip cd bacend then composer require stripe/stripe-php
+
+
+
+
+
+
+
 
 +++++++++++++++++++++++++++++++++++++++++++++++
 What is Pinia?

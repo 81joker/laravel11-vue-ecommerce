@@ -57,10 +57,9 @@
         </li>
       </ul>
       <div class="my-3">
-        <button class="btn btn-lg btn-dark btn-block w-100"
+        <Strip
         v-if="authStore.user?.profile_completed"
-        > Pay Now </button>
-        <!-- <button class="btn btn-dark btn-block d-block"> Proceed to Payment </button> -->
+        >  </Strip>
         <Alert v-else
         content="Add your billing details"
         bgColor="warning"
@@ -79,6 +78,8 @@ import { useToast } from "vue-toastification";
 import Alert from "../layouts/Alert.vue";
 import UpdateUserInfos from "../profile/UpdateUserInfos.vue";
 import Copoun from "../coupons/Coupon.vue";
+import Strip from "../payment/Stripe.vue";
+
 // define the store
 const authStore = useAuthStore();
 const cartStore = useCartStore();
