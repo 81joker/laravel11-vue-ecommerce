@@ -1,4 +1,6 @@
 
+NOT: After the deleted the coupon the order alrady also deleted withe coupon i think in this case  you muss after the delete the coupon the total price back in the same 
+
 1- Install Vue.js4
 2- Install Router + Botstrap + Boostrap icons +  AXios
 3- Adding Navbar and implemnt to App.js

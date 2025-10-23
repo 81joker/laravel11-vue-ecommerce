@@ -60,6 +60,12 @@
                         Coupons
                     </a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 @if(request()->routeIs('admin.orders.index')) text-dark @endif" aria-current="page" href="{{route('admin.orders.index')}}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Orders
+                    </a>
+                </li>
             </ul>
             <hr class="my-3">
             <ul class="nav flex-column mb-auto">
