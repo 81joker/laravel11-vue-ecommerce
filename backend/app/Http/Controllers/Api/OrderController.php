@@ -19,14 +19,14 @@ class OrderController extends Controller
     public function storeUserOrders(Request $request)
     {
         foreach($request->cartItems as $item){
-            $item = Order::create([
+            $order = Order::create([
                 "qty" => $item['qty'],
                 "user_id" => $request->user()->id,
                 "coupon_id" => $item['coupon_id'],
                 "total" => $this->calculateEachOrderTotal($item['price'], $item['qty'], $item['coupon_id'])
             ]);
 
-            $item->products()->attach($item['product_id']);
+            $order->products()->attach($item['product_id']);
         }
         return response()->json([
             "user" => UserResource::make($request->user()),
@@ -55,6 +55,7 @@ class OrderController extends Controller
      */
     public function payOrdersByStripe(Request $request)
     {
+
         Stripe::setApiKey(config('services.stripe.secret'));
         try {
             $checkout_session = Session::create([

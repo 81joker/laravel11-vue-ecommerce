@@ -70,6 +70,12 @@ const router = createRouter({
             component: SuccessPayment,
             beforeEnter: [checkIfUserIsLoggedIn]
         },
+        {
+            path: '/user/orders',
+            name: 'UserOrders',
+            component: () => import('@/components/profile/UserOrders.vue'),
+            beforeEnter: [checkIfUserIsLoggedIn]
+        }
     
         // { 
         //    path: '/:pathMatch(.*)*', 
