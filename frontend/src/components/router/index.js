@@ -8,6 +8,7 @@ import Checkout from '../checkout/Checkout.vue'
 import { useAuthStore } from '../../stores/useAuthStore'
 import Profile from '../profile/Profile.vue'
 import SuccessPayment from '../payment/SuccessPayment.vue'
+import UserFavorites from '../favorites/Favorites.vue'
 
 // add route guard 
 function checkIfUserIsLoggedIn(){
@@ -74,6 +75,12 @@ const router = createRouter({
             path: '/user/orders',
             name: 'UserOrders',
             component: () => import('@/components/profile/UserOrders.vue'),
+            beforeEnter: [checkIfUserIsLoggedIn]
+        },
+        {
+            path: '/favorites',
+            name: 'UserFavorites',
+            component: UserFavorites,
             beforeEnter: [checkIfUserIsLoggedIn]
         }
     

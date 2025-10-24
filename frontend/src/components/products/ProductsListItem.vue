@@ -29,16 +29,40 @@
         <button class="btn btn-danger btn-sm">
           <i class="bi bi-cart-plus"></i> Add to Cart
         </button>
-        <button class="btn btn-outline-secondary btn-sm">
-          <i class="bi bi-heart"></i>
-        </button>
+        <!-- Favorite button first Way did from nehad -->
+        <!-- <button class="btn btn-outline-danger btn-sm" @click="favoriteStore.addFavorite(product)" >
+          <i class="bi bi-heart" v-if="!favoriteStore.checkIfProductInFavorites(product)"></i>
+          <i class="bi bi-heart-fill" v-else></i>
+        </button>-->
+
+        <!-- Favorite button second Way did from tim -->
+<button class="btn btn-outline-danger btn-sm"
+                    @click="favoritesStore.addToFavorites(product)"
+                    v-if="!favoritesStore.checkIfProductAlreadyAddedToFavorites(product)"
+                >
+                    <i class="bi bi-heart"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm"
+                    @click="favoritesStore.addToFavorites(product)"
+                    v-else
+                >
+                    <i class="bi bi-heart-fill"></i>
+                </button>
+
+
+
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { useFavoritesStore } from "@/stores/useFavoritesStore";
 import { computed } from "vue";
 import StarRating from "vue-star-rating";
+
+
+// define the favorite store
+const favoritesStore = useFavoritesStore()
 
 const props = defineProps({
   product: {

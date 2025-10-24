@@ -59,6 +59,13 @@
               }})
             </router-link>
           </li>
+          <li class="nav-item" v-if="authStore.isLoggedIn">
+            <router-link class="nav-link" aria-current="page" to="/favorites">
+              <i class="bi bi-heart"></i> Favorites ({{
+                favoritesStore.favorites.length
+              }})
+            </router-link>
+          </li>
         </ul>
       </div>
     </div>
@@ -73,6 +80,7 @@ import { API_BASE_URL, headersConfig } from "@/helpers/config";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
+import { useFavoritesStore } from "@/stores/useFavoritesStore";
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 
@@ -81,6 +89,8 @@ const toast = useToast();
 
 // define router
 const router = useRouter();
+
+const favoritesStore = useFavoritesStore()
 
 // Logout function
 const userLogout = async () => {
