@@ -17,6 +17,21 @@
           </div>
         </div>
         <div class="col-md-5 mx-auto">
+          <div v-if="productStore.product?.reviews.length > 0">
+                    <StarRating
+                        v-model:rating="reviewAvg"
+                        :show-rating="false"
+                        read-only
+                        :star-size="24"
+                    />
+                    <small class="text-muted">
+                        {{ productStore.product.reviews.length }}
+                        {{ productStore.product.reviews.length > 1 ? "reviews" : "review"}}
+                    </small>
+                </div>
+
+
+
           <h5 class="my-3">{{ productStore.product.name }}</h5>
           <div class="d-inline-flex">
             <span class="badge text-bg-light">
@@ -106,7 +121,7 @@
 </template>
 <script setup>
 import { useRoute } from "vue-router";
-import { onMounted, reactive } from "vue";
+import { computed, onMounted, reactive } from "vue";
 import { useProductDetailsStore } from "@/stores/useProductDetailsStore";
 import { useCartStore } from "@/stores/useCartStore";
 import Spinner from "@/components/layouts/Spinner.vue";
@@ -115,6 +130,8 @@ import AddReview from "../reviews/AddReview.vue";
 import { useAuthStore } from "@/stores/useAuthStore";
 import ReviewList from "../reviews/ReviewList.vue";
 import UpdateReview from "../reviews/UpdateReview.vue";
+import StarRating from "vue-star-rating";
+
 const productStore = useProductDetailsStore();
 const cartStore = useCartStore();
 const route = useRoute();
@@ -141,6 +158,21 @@ const setChosenSize = (size) => {
 const checkIfUserBoughtProduct = () => {
   return authStore.user?.orders?.some(order => order?.products?.some(product => product.id === productStore.product?.id))
 };
+
+//calculate the average review on the every product
+// const calculateAverageReview = () => {
+//   const reviews = productStore.product?.reviews || [];
+//   if (reviews.length === 0) return 0;
+//   const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+//   return (total / reviews.length).toFixed(1);
+// };
+
+
+    //calculate the average reviews of the product
+  // TODO: you should know more about this function Nehad
+    const reviewAvg = computed(() => productStore.product?.reviews.reduce((acc,review) => 
+    acc + review.rating / productStore.product.reviews.length,0))
+
 
 onMounted(() => {
   productStore.fetchProduct(route.params.slug);

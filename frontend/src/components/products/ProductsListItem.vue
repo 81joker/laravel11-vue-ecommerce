@@ -18,14 +18,18 @@
         <p class="card-text" v-dompurify-html="product.desc.substr(0, 50)"></p>
         <div class="d-flex justify-content-between align-items-center">
           <span class="h5 mb-0">${{ product.price }}</span>
-          <div>
-            <i class="bi bi-star-fill text-warning"></i>
-            <i class="bi bi-star-fill text-warning"></i>
-            <i class="bi bi-star-fill text-warning"></i>
-            <i class="bi bi-star-fill text-warning"></i>
-            <i class="bi bi-star-half text-warning"></i>
-            <small class="text-muted">(4.5)</small>
-          </div>
+         <div v-if="product.reviews.length > 0">
+                    <StarRating
+                        v-model:rating="reviewAvg"
+                        :show-rating="false"
+                        read-only
+                        :star-size="24"
+                    />
+                    <small class="text-muted">
+                        {{ product.reviews.length }}
+                        {{ product.reviews.length > 1 ? "reviews" : "review"}}
+                    </small>
+                </div>
         </div>
       </div>
       <div class="card-footer d-flex justify-content-between bg-light">
@@ -40,8 +44,18 @@
   </div>
 </template>
 <script setup>
-defineProps({
-  product: Object,
-  required: true
+import { computed } from "vue";
+import StarRating from "vue-star-rating";
+
+const props = defineProps({
+  product: {
+    type: Object,
+    required: true,
+  },
 });
+
+//calculate the average reviews of the product
+    const reviewAvg = computed(() => props.product.reviews.reduce((acc,review) => 
+    acc + review.rating / props.product.reviews.length,0))
+
 </script>
