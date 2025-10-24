@@ -57,7 +57,7 @@ class Product extends Model
     {
         return $this->hasMany(Review::class)
             ->with('user')
-            ->where('approved', 1)
+            ->where('approved', 0)
             ->latest();
     }
 
