@@ -2,7 +2,7 @@
   <div class="row my-5">
     <ProfileSidebar />
     <div class="col-md-8">
-      <div class="card-body" v-if="authStore?.user?.orders?.length > 0">
+      <div class="card-body" v-if="authStore.user?.orders?.length > 0">
         <table class="table">
           <thead>
             <tr>

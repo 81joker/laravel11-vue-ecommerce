@@ -103,7 +103,6 @@
           </div>
         </div>
       </div>
-    </div>
 
     <div class="row my-5" v-if="productStore.product">
       <div class="col-md-8 mx-auto">
@@ -115,6 +114,7 @@
           </div>
         </div>
       </div>
+    </div>
     </div>
 
   </div>
@@ -156,7 +156,8 @@ const setChosenSize = (size) => {
 
 // check if user has bought the product
 const checkIfUserBoughtProduct = () => {
-  return authStore.user?.orders?.some(order => order?.products?.some(product => product.id === productStore.product?.id))
+  return authStore.user?.orders?.some(order =>
+   order.products?.some(product => product.id === productStore.product?.id))
 };
 
 //calculate the average review on the every product

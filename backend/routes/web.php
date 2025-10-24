@@ -3,11 +3,15 @@
 use App\Models\Coupon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ColoryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/',[AdminController::class,'login'])->name('admin.login');
 Route::post('admin/auth',[AdminController::class,'auth'])->name('admin.auth');
@@ -20,7 +24,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
 
 // Categories
-    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class ,
+    Route::resource('categories', CategoryController::class ,
     [
         'names' => [
             'index' => 'admin.categories.index',
@@ -32,7 +36,7 @@ Route::prefix('admin')->middleware('admin')->group(function () {
         ]   
     ]);
 // Brands
-    Route::resource('brands', \App\Http\Controllers\Admin\BrandController::class ,
+    Route::resource('brands', BrandController::class ,
     [
         'names' => [
             'index' => 'admin.brands.index',
@@ -97,4 +101,14 @@ Route::prefix('admin')->middleware('admin')->group(function () {
     Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
     Route::get('update/{order}/order', [OrderController::class, 'updateDeliveryAtDate'])->name('admin.orders.update');
     Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('admin.orders.delete');
+    //review routes
+    Route::get('reviews', [ReviewController::class, 'index'])->name('admin.reviews.index');
+    Route::get('update/{review}/{status}/review', [ReviewController::class, 'toggleApproveStatus'])->name('admin.reviews.update');
+    // Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('admin.reviews.update');
+    Route::delete('delete/{review}/review', [ReviewController::class, 'destroy'])->name('admin.reviews.delete');
+
+    // user routes
+    Route::get('users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::delete('delete/{user}/user', [UserController::class, 'destroy'])->name('admin.users.delete');
+
 });
