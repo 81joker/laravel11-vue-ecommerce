@@ -132,6 +132,15 @@
         </div>
       </div>
     </div>
+
+    <div class="row my-5" v-if="productStore.product">
+      <div class="col-md-8 mx-auto">
+        <div v-if="authStore.isLoggedIn">
+          <AddReview />
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 <script setup>
@@ -141,11 +150,13 @@ import { useProductDetailsStore } from "@/stores/useProductDetailsStore";
 import { useCartStore } from "@/stores/useCartStore";
 import Spinner from "@/components/layouts/Spinner.vue";
 import { makeUniqueId } from "@/helpers/config.js";
+import AddReview from "../reviews/AddReview.vue";
+import { useAuthStore } from "@/stores/useAuthStore";
 const productStore = useProductDetailsStore();
 const cartStore = useCartStore();
 const route = useRoute();
 
-
+const authStore = useAuthStore()
 
 const data = reactive({
   qty: 1,

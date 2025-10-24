@@ -33,7 +33,7 @@ Key benefits:
 15- install [Pinia Plugin Persistedstate](https://www.npmjs.com/package/pinia-plugin-persistedstate)The pinia-plugin-persistedstate allows automatic state persistence in Pinia stores using localStorage or sessionStorage, enhancing user experience by retaining state across sessions.
 
 16- Install strip cd bacend then composer require stripe/stripe-php
-17- install [Star Rating Component Review](https://www.npmjs.com/package/vue-star-rating/v/2.1.0)
+17- install [Star Rating Component Review] in frontend(https://www.npmjs.com/package/vue-star-rating/v/2.1.0)
 to display ![starts](https://user-images.githubusercontent.com/13747552/76623388-4ee74580-652b-11ea-9efb-5fb0ca548980.png)
 
 
