@@ -9,7 +9,7 @@ import { useAuthStore } from '../../stores/useAuthStore'
 import Profile from '../profile/Profile.vue'
 import SuccessPayment from '../payment/SuccessPayment.vue'
 import UserFavorites from '../favorites/Favorites.vue'
-
+import NotFound from '../404/PageNotFound.vue'
 // add route guard 
 function checkIfUserIsLoggedIn(){
     const authStore = useAuthStore();
@@ -75,20 +75,19 @@ const router = createRouter({
             path: '/user/orders',
             name: 'UserOrders',
             component: () => import('@/components/profile/UserOrders.vue'),
-            beforeEnter: [checkIfUserIsLoggedIn]
+            // beforeEnter: [checkIfUserIsLoggedIn]
         },
         {
             path: '/favorites',
             name: 'UserFavorites',
             component: UserFavorites,
-            beforeEnter: [checkIfUserIsLoggedIn]
+            // beforeEnter: [checkIfUserIsLoggedIn]
+        },
+        { 
+           path: '/:pathMatch(.*)*', 
+           name: 'NotFound', 
+           component: NotFound
         }
-    
-        // { 
-        //    path: '/:pathMatch(.*)*', 
-        //    name: 'NotFound', 
-        //    component: () => import('@/components/NotFound.vue') 
-        // }
 
     ]
 })
