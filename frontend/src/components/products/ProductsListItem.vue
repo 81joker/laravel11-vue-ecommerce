@@ -40,6 +40,8 @@
                     </small>
                 </div>
             </div>
+
+            <!--TODO: condition for showing the button after the login and to do route to login page-->
             <div class="card-footer d-flex justify-content-between bg-light">
                 <router-link :to="`/product/${product.slug}`" class="btn btn-danger btn-sm">
                    <i class="bi bi-cart-plus"></i> Add to Cart
@@ -58,6 +60,7 @@
                 </button>
             </div>
         </div>
+
     </div>
 </template>
 
