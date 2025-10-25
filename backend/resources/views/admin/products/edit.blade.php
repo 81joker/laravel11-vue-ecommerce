@@ -104,10 +104,6 @@
                                     <option value="" selected disabled>Choose a brand</option>
                                     @foreach ($brands as $brand)
                                         <option value="{{$brand->id}}"
-<<<<<<< HEAD
-                                            {{-- old('brand_id',$product->brand_id) == $brand->id) --}}
-=======
->>>>>>> b3de5f9a8fabc690d4357dae4c6c240c84cf04fa
                                             @if(old('brand_id',$product->brand_id) == $brand->id) selected @endif>
                                             {{ $brand->name }}
                                         </option>
