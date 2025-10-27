@@ -13,6 +13,6 @@ class ColorSeeder extends Seeder
      */
     public function run(): void
     {
-       Color::factory(10)->create();
+    //    Color::factory(10)->create();
     }
 }

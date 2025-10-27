@@ -37,12 +37,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             BrandSeeder::class,
-            SizeSeeder::class,
-            ColorSeeder::class,
-            ProducSeeder::class,
+            // ColorSeeder::class,
             ColorProductSeeder::class,
             ProductSizeSeeder::class,
+            ProducSeeder::class,
             CouponSeeder::class,
+            SizeSeeder::class,
         ]);
     }
 }

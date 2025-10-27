@@ -16,8 +16,16 @@ class SizeFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL']),
-        ];
+        // static $sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+        // static $index = 0;
+
+        // $name = $sizes[$index % count($sizes)];
+        // $index++;
+
+        // return ['name' => $name];
+         static $sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+        static $i = 0;
+
+        return ['name' => $sizes[$i++ % count($sizes)]];
     }
 }

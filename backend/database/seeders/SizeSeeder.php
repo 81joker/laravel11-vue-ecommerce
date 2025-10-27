@@ -13,6 +13,9 @@ class SizeSeeder extends Seeder
      */
     public function run(): void
     {
-       Size::factory(10)->create();
+    //    Size::factory(4)->create();
+    //  foreach (['S','M','L','XL','XXL'] as $s) {
+    //         Size::firstOrCreate(['name' => $s]);
+    //     }
     }
 }
