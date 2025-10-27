@@ -1,6 +1,6 @@
 <template>
-    <div class="col-md-6">
-        <div class="card mb-2" style="max-width: 320px">
+    <div class="col-md-3">
+        <div class="card mb-2" style="max-width: 280px">
             <img :src="product.thumbnail" class="card-img-top" :alt="product.name" height="279">
             <div class="card-body">
                 <router-link class="text-decoration-none text-dark" :to="`/product/${product.slug}`">

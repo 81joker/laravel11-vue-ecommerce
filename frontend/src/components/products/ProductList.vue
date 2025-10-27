@@ -41,7 +41,7 @@ const productStore = useProductStore();
 
 // define how many products to shw on home page 
 const data = reactive({
-    productToShow: 4
+    productToShow: 8
 })
 
 // define the function to load more products
