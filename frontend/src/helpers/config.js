@@ -1,4 +1,4 @@
-export const API_BASE_URL =  'https://laravelshopengine.nehaddev.com/api';   
+export const API_BASE_URL =  'http://localhost:8000/api';   
 
 
 export const headersConfig = (token = null, contentType = 'application/json') => {

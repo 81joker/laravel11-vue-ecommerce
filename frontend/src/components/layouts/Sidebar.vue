@@ -7,10 +7,12 @@
                 >Clear all</button>
         </div>
         <SearchForm />
+        <div id="accordion-collapse" data-accordion="collapse">
         <Categories />
         <Brands />
         <Sizes />
         <Colors />
+    </div>
     </div>
 </template>
 

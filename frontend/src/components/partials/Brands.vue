@@ -1,6 +1,12 @@
 <template>
   <div class="mb-3">
-    <h6>Brands</h6>
+          <h6 id="accordion-collapse-heading-brands">
+        <button type="button" data-accordion-target="#accordion-collapse-brand" aria-expanded="true"
+          aria-controls="accordion-collapse-brand">
+          Brands
+        </button>
+      </h6>
+            <div id="accordion-collapse-brand" aria-labelledby="accordion-collapse-heading-brands">
     <ul class="nav d-flex flex-column">
         <li class="nav-item mb-1" v-for="brand in productsStore.brands"
           :key="brand.id">
@@ -11,6 +17,7 @@
             </button>
         </li>
     </ul>
+            </div>
   </div>
 </template>
 
