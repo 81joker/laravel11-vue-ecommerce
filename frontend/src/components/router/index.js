@@ -75,7 +75,7 @@ const router = createRouter({
             path: '/user/orders',
             name: 'UserOrders',
             component: () => import('@/components/profile/UserOrders.vue'),
-            // beforeEnter: [checkIfUserIsLoggedIn]
+            beforeEnter: [checkIfUserIsLoggedIn]
         },
         {
             path: '/favorites',

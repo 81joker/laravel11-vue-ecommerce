@@ -1,4 +1,4 @@
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://laravelshopengine.nehaddev.com/api';   
+export const API_BASE_URL =  'https://laravelshopengine.nehaddev.com/api';   
 
 
 export const headersConfig = (token = null, contentType = 'application/json') => {
