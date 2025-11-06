@@ -7,7 +7,7 @@
       </a>
     </h6>
     <div id="collapseCategory">
-      <ul class="nav d-flex flex-column ">
+      <ul class="nav d-flex flex-lg-column flex-row flex-wrap">
         <li class="nav-item mb-1" v-for="category in productsStore.categories" :key="category.id">
           <button class="btn btn-sm btn-link text-dark"
             @click="productsStore.filterProducts('category', category.slug)">

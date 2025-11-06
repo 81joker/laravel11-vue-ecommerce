@@ -13,7 +13,7 @@
       </a>
     </h6>
     <div id="collapseBrands">
-      <ul class="nav d-flex flex-column">
+      <ul class="nav d-flex flex-lg-column flex-row flex-wrap">
         <li
           class="nav-item mb-1"
           v-for="brand in productsStore.brands"
